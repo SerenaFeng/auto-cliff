@@ -1,9 +1,9 @@
 [metadata]
-name = {{ project.name }}
-summary = {{ project.summary }}
-author = {{ project.author }}
-author-email = {{ project['author-email'] }}
-home-page = {{ project['home-page'] }}
+name = {{ conf.project }}
+summary = {{ conf.summary }}
+author = {{ conf.author }}
+author-email = {{ conf['author-email'] }}
+home-page = {{ conf['home-page'] }}
 license = Apache-2.0
 classifier =
     Intended Audience :: Information Technology
@@ -19,19 +19,19 @@ setup-hooks =
 
 [files]
 packages =
-    {{ project.package }}
+    {{ conf.package }}
 
 data_files =
-#    /etc/{{ project.package }} = etc/*
+#    /etc/{{ conf.package }} = etc/*
 
 [entry_points]
 console_scripts =
-    {{ project.cli }} = {{ project.package }}.shell:main
+    {{ conf.cli }} = {{ conf.package }}.shell:main
 
 subs =
-    {% for sub, actions in project.subs.items() -%}
+    {% for sub, actions in conf.subs.items() -%}
     {% for action in actions -%}
-    {{ sub }} {{ action }} = {{ project.package }}.cli.{{ sub }}:{{ sub|title }}{{ action|title }}
+    {{ sub }} {{ action }} = {{ conf.package }}.cli.{{ sub }}:{{ sub|title }}{{ action|title }}
     {% endfor %}
     {% endfor %}
 [egg_info]

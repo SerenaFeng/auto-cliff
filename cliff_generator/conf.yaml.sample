@@ -1,0 +1,27 @@
+---
+
+# must be provided
+project: grafana-client
+
+# if not provided, empty
+summary: a tool used to generate Grafana Dashboard
+
+# if not provided, empty
+author: SerenaFeng
+
+# if not provided, empty
+author-email: serena.feng.711@gmail.com
+
+# if not provided, leverage https://github.com/{author}/{project}
+home-page: https://github.com/SerenaFeng/Grafana-client
+
+# if not provide, substitute - with _ in {project}
+package: grafana_client
+
+# if not provide, leverage {project} directly
+#cli: grafana-client
+
+subs:
+  dashboard: [create, update, show, list, delete]
+  folder: [create, update, show, list, delete]
+  datasource: [create, update, show, list, delete]
