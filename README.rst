@@ -48,7 +48,7 @@ Usage
 ``-o``: the output directory, './' by default
 
 ``conf_file``: config file path, the config file must be a yaml file,
-               such as *./conf.yaml*
+such as *./conf.yaml*
 
 References
 --------------
