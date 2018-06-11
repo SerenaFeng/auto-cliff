@@ -1,0 +1,67 @@
+from {{ package }} import cli
+
+{% for action in actions -%}
+{% if action == 'list' -%}
+class {{ sub|title }}List(cli.Lister):
+    def get_parser(self, prog_name):
+        parser = super({{ sub|title }}List, self).get_parser(prog_name)
+        return parser
+
+    def take_action(self, parsed_args):
+        suites = []
+        columns = []
+        return self.format_output(columns, suites)
+{% elif action == 'show' -%}
+class {{ sub|title }}Show(cli.Shower):
+    def get_parser(self, prog_name):
+        parser = super({{ sub|title }}List, self).get_parser(prog_name)
+#        parser.add_argument('name',
+#                            help='Show Resource by name')
+        return parser
+
+    def take_action(self, parsed_args):
+        suites = []
+        columns = []
+        return self.format_output(columns, suites)
+{% elif action == 'create' -%}
+class {{ sub|title }}Create(cli.Command):
+    def get_parser(self, prog_name):
+        parser = super({{ sub|title }}Show, self).get_parser(prog_name)
+#        parser.add_argument('body',
+#                            type=json.loads,
+#                            help='Create body')
+        return parser
+
+    def take_action(self, parsed_args):
+        suites = []
+        columns = []
+        return self.format_output(columns, suites)
+{% elif action == 'update' -%}
+class {{ sub|title }}Update(cli.Command):
+    def get_parser(self, prog_name):
+        parser = super({{ sub|title }}Show, self).get_parser(prog_name)
+#        parser.add_argument('name',
+#                            type=str,
+#                            help='Update resource by name')
+#        parser.add_argument('body',
+#                            type=json.loads,
+#                            help='Update body')
+        return parser
+
+    def take_action(self, parsed_args):
+        suites = []
+        columns = []
+        return self.format_output(columns, suites)
+{% elif action == 'delete' -%}
+class {{ sub|title }}Delete(cli.Command):
+    def get_parser(self, prog_name):
+        parser = super({{ sub|title }}Show, self).get_parser(prog_name)
+#        parser.add_argument('name',
+#                            type=str,
+#                            help='Delete resource by name')
+        return parser
+
+    def take_action(self, parsed_args):
+        return 'deleted'
+{% endif %}
+{% endfor %}
