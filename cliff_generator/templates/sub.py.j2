@@ -14,7 +14,7 @@ class {{ sub|title }}List(cli.Lister):
 {% elif action == 'show' -%}
 class {{ sub|title }}Show(cli.Shower):
     def get_parser(self, prog_name):
-        parser = super({{ sub|title }}List, self).get_parser(prog_name)
+        parser = super({{ sub|title }}Show, self).get_parser(prog_name)
 #        parser.add_argument('name',
 #                            help='Show Resource by name')
         return parser
@@ -24,9 +24,9 @@ class {{ sub|title }}Show(cli.Shower):
         columns = []
         return self.format_output(columns, suites)
 {% elif action == 'create' -%}
-class {{ sub|title }}Create(cli.Command):
+class {{ sub|title }}Create(cli.Shower):
     def get_parser(self, prog_name):
-        parser = super({{ sub|title }}Show, self).get_parser(prog_name)
+        parser = super({{ sub|title }}Create, self).get_parser(prog_name)
 #        parser.add_argument('body',
 #                            type=json.loads,
 #                            help='Create body')
@@ -37,9 +37,9 @@ class {{ sub|title }}Create(cli.Command):
         columns = []
         return self.format_output(columns, suites)
 {% elif action == 'update' -%}
-class {{ sub|title }}Update(cli.Command):
+class {{ sub|title }}Update(cli.Shower):
     def get_parser(self, prog_name):
-        parser = super({{ sub|title }}Show, self).get_parser(prog_name)
+        parser = super({{ sub|title }}Update, self).get_parser(prog_name)
 #        parser.add_argument('name',
 #                            type=str,
 #                            help='Update resource by name')
@@ -55,7 +55,7 @@ class {{ sub|title }}Update(cli.Command):
 {% elif action == 'delete' -%}
 class {{ sub|title }}Delete(cli.Command):
     def get_parser(self, prog_name):
-        parser = super({{ sub|title }}Show, self).get_parser(prog_name)
+        parser = super({{ sub|title }}Delete, self).get_parser(prog_name)
 #        parser.add_argument('name',
 #                            type=str,
 #                            help='Delete resource by name')

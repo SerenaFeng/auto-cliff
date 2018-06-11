@@ -28,7 +28,7 @@ data_files =
 console_scripts =
     {{ project.cli }} = {{ project.package }}.shell:main
 
-{{ project.cli }} =
+subs =
     {% for sub, actions in project.subs.items() -%}
     {% for action in actions -%}
     {{ sub }} {{ action }} = {{ project.package }}.cli.{{ sub }}:{{ sub|title }}{{ action|title }}

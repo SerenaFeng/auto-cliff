@@ -10,7 +10,7 @@ class {{ cls }}Shell(app.App):
         super({{ cls }}Shell, self).__init__(
             description='{{ project.name }} cli',
             version='0.1',
-            command_manager=commandmanager.CommandManager('{{ project.cli }}'),
+            command_manager=commandmanager.CommandManager('subs'),
             deferred_help=True,
         )
 

@@ -34,6 +34,7 @@ class Command(command.Command):
         self.log.debug('run(%s)', parsed_args)
         return super(Command, self).run(parsed_args)
 
+
 class Lister(Command, lister.Lister):
     @staticmethod
     def format_output(columns, data):
@@ -41,7 +42,7 @@ class Lister(Command, lister.Lister):
                 (get_item_properties(s, columns) for s in data))
 
 
-class Show(Command):
+class Shower(Command):
     @staticmethod
     def format_output(columns, data):
         return (columns,
