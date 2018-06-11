@@ -67,7 +67,7 @@ class Generation(cli.Command):
 
         print 'begin to generate {}/shell.py'.format(pkg_dir)
         shell_py_t = env.get_template('shell.py.j2')
-        shell_py = shell_py_t.render(project=pname,
+        shell_py = shell_py_t.render(conf=conf,
                                      cls=pname.replace('-', '').capitalize())
         self.write_file('shell.py', shell_py, pkg_dir)
 

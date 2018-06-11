@@ -8,9 +8,9 @@ class {{ cls }}Shell(app.App):
 
     def __init__(self):
         super({{ cls }}Shell, self).__init__(
-            description='{{ project }} cli',
+            description='{{ conf.project }} cli',
             version='0.1',
-            command_manager=commandmanager.CommandManager('subs'),
+            command_manager=commandmanager.CommandManager('{{ conf.package }}'),
             deferred_help=True,
         )
 

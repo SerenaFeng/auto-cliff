@@ -1,5 +1,6 @@
 from {{ package }} import cli
 
+
 {% for action in actions -%}
 {% if action == 'list' -%}
 class {{ sub|title }}List(cli.Lister):
@@ -11,6 +12,7 @@ class {{ sub|title }}List(cli.Lister):
         suites = []
         columns = []
         return self.format_output(columns, suites)
+
 {% elif action == 'show' -%}
 class {{ sub|title }}Show(cli.Shower):
     def get_parser(self, prog_name):
@@ -23,6 +25,7 @@ class {{ sub|title }}Show(cli.Shower):
         suites = []
         columns = []
         return self.format_output(columns, suites)
+
 {% elif action == 'create' -%}
 class {{ sub|title }}Create(cli.Shower):
     def get_parser(self, prog_name):
@@ -36,6 +39,7 @@ class {{ sub|title }}Create(cli.Shower):
         suites = []
         columns = []
         return self.format_output(columns, suites)
+
 {% elif action == 'update' -%}
 class {{ sub|title }}Update(cli.Shower):
     def get_parser(self, prog_name):
@@ -52,6 +56,7 @@ class {{ sub|title }}Update(cli.Shower):
         suites = []
         columns = []
         return self.format_output(columns, suites)
+
 {% elif action == 'delete' -%}
 class {{ sub|title }}Delete(cli.Command):
     def get_parser(self, prog_name):
