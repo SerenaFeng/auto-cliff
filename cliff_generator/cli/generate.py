@@ -30,74 +30,72 @@ class Generation(cli.Command):
         if not package:
             package = pname.replace('-', '_')
             conf.update({'package': package})
-        cliname = conf.get('cli')
-        if not cliname:
-            cliname = pname
+        if not conf.get('cli'):
             conf.update({'cli': pname})
 
         root_dir = parsed_args.output if parsed_args.output else './'
         pdir = os.path.join(root_dir, pname)
         pkg_dir = os.path.join(pdir, package)
         cli_dir = os.path.join(pkg_dir, 'cli')
+        utils_dir = os.path.join(pkg_dir, 'utils')
 
-        print('begin generate project tree {}'.format(cli_dir))
+        print('begin generate project tree {}'.format(pkg_dir))
         if os.path.exists(pdir) and parsed_args.rm:
             try:
                 shutil.rmtree(pdir)
             except Exception as err:
                 raise Exception('Delete project [{}] failed, due to {}'.format(pdir, err))
 
-        if not os.path.exists(cli_dir):
-            try:
-                os.makedirs(cli_dir)
-            except Exception as err:
-                raise Exception('Create dir [{}] failed, due to: {}'.format(dir, err))
+        for dir in [cli_dir, utils_dir]:
+            if not os.path.exists(dir):
+                try:
+                    os.makedirs(dir)
+                except Exception as err:
+                    raise Exception('Create dir [{}] failed, due to: {}'.format(dir, err))
 
         env = Environment(loader=PackageLoader('cliff_generator', 'templates'))
+
+        for file in [('setup.py', pdir),
+                     ('command.py', utils_dir),
+                     ('gitignore', pdir, '.gitignore')]:
+            print 'begin to generate {}/{}.py'.format(file[1], file[0])
+            self.copyfile(*file)
 
         print 'begin to generate {}/setup.cfg'.format(pdir)
         setup_cfg_t = env.get_template('setup.cfg.j2')
         setup_cfg = setup_cfg_t.render(conf=conf)
-        self.write_file('setup.cfg', setup_cfg, pdir)
-
-        print 'begin to generate {}/setup.py'.format(pdir)
-        setup_py_t = env.get_template('setup.py.j2')
-        setup_py = setup_py_t.render()
-        self.write_file('setup.py', setup_py, pdir)
+        self.writefile('setup.cfg', setup_cfg, pdir)
 
         print 'begin to generate {}/shell.py'.format(pkg_dir)
         shell_py_t = env.get_template('shell.py.j2')
         shell_py = shell_py_t.render(conf=conf,
                                      cls=pname.replace('-', '').capitalize())
-        self.write_file('shell.py', shell_py, pkg_dir)
+        self.writefile('shell.py', shell_py, pkg_dir)
 
         print 'begin to generate {}/__init__.py'.format(pkg_dir)
-        init_py_t = env.get_template('__init__.py.j2')
-        init_py = init_py_t.render(author=conf.get('author'))
-        self.write_file('__init__.py', init_py, pkg_dir)
-
-        print 'begin to generate {}/__init__.py'.format(cli_dir)
-        command_py_t = env.get_template('command.py.j2')
-        command_py = command_py_t.render()
-        self.write_file('__init__.py', command_py, cli_dir)
+        for dir in [cli_dir, utils_dir, pkg_dir]:
+            init_py_t = env.get_template('__init__.py.j2')
+            init_py = init_py_t.render(author=conf.get('author'))
+            self.writefile('__init__.py', init_py, dir)
 
         for sub, actions in conf.get('subs').iteritems():
             print 'begin to generate {}/{}.py'.format(cli_dir, sub)
             sub_py_t = env.get_template('sub.py.j2')
             sub_py = sub_py_t.render(package=package, sub=sub, actions=actions)
-            self.write_file('{}.py'.format(sub), sub_py, cli_dir)
-
-        print 'begin to generate {}/.gitignore'.format(pdir)
-        gitignore_t = env.get_template('gitignore.j2')
-        gitignore = gitignore_t.render()
-        self.write_file('.gitignore', gitignore, pdir)
+            self.writefile('{}.py'.format(sub), sub_py, cli_dir)
 
         return 'Congrats: Generate Success'
 
-    def write_file(self, filename, content, dir):
+    def writefile(self, filename, content, dir):
         fdir = os.path.join(dir, filename)
         try:
             with open(fdir, 'w') as fd:
                 fd.write(content)
         except Exception as err:
             print 'write file {} failed with: {}'.format(filename, err)
+
+    def copyfile(self, filename, dst, dstname=None):
+        this_dir = os.path.dirname(os.path.abspath(__file__))
+        templates_dir = os.path.join(os.path.dirname(this_dir), 'templates')
+        shutil.copyfile(os.path.join(templates_dir, filename),
+                        os.path.join(dst, filename if not dstname else dstname))

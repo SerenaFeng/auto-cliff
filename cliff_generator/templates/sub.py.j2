@@ -1,9 +1,9 @@
-from {{ package }} import cli
+from {{ package }}.utils import command
 
 
 {% for action in actions -%}
 {% if action == 'list' -%}
-class {{ sub|title }}List(cli.Lister):
+class {{ sub|title }}List(command.Lister):
     def get_parser(self, prog_name):
         parser = super({{ sub|title }}List, self).get_parser(prog_name)
         return parser
@@ -14,7 +14,7 @@ class {{ sub|title }}List(cli.Lister):
         return self.format_output(columns, suites)
 
 {% elif action == 'show' -%}
-class {{ sub|title }}Show(cli.ShowOne):
+class {{ sub|title }}Show(command.ShowOne):
     def get_parser(self, prog_name):
         parser = super({{ sub|title }}Show, self).get_parser(prog_name)
 #        parser.add_argument('name',
@@ -25,7 +25,7 @@ class {{ sub|title }}Show(cli.ShowOne):
         return self.format_output({})
 
 {% elif action == 'create' -%}
-class {{ sub|title }}Create(cli.ShowOne):
+class {{ sub|title }}Create(command.ShowOne):
     def get_parser(self, prog_name):
         parser = super({{ sub|title }}Create, self).get_parser(prog_name)
 #        parser.add_argument('body',
@@ -37,7 +37,7 @@ class {{ sub|title }}Create(cli.ShowOne):
         return self.format_output({})
 
 {% elif action == 'update' -%}
-class {{ sub|title }}Update(cli.ShowOne):
+class {{ sub|title }}Update(command.ShowOne):
     def get_parser(self, prog_name):
         parser = super({{ sub|title }}Update, self).get_parser(prog_name)
 #        parser.add_argument('name',
@@ -52,7 +52,7 @@ class {{ sub|title }}Update(cli.ShowOne):
         return self.format_output({})
 
 {% elif action == 'delete' -%}
-class {{ sub|title }}Delete(cli.Command):
+class {{ sub|title }}Delete(command.Command):
     def get_parser(self, prog_name):
         parser = super({{ sub|title }}Delete, self).get_parser(prog_name)
 #        parser.add_argument('name',
