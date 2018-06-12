@@ -24,3 +24,6 @@ home-page: https://github.com/SerenaFeng/cliffg-example
 subs:
   sub1: [create, show, list, delete]
   sub2: [create, update, show]
+
+# support communicating with other components using RESTful API
+use_rest: False

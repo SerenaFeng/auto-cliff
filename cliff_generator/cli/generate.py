@@ -67,6 +67,10 @@ class Generation(cli.Command):
                 elif file.endswith('.j2'):
                     self.renderfile(file, sr_dir, dr_dir)
                 elif not file.endswith('.pyc'):
+                    if file in ('rest.py', 'url_parse.py') and \
+                            not bool(self.conf.get('use_rest')):
+                        continue
+
                     self.copyfile(file, sr_dir, dr_dir)
 
         return 'Congrats: Generate Success'
