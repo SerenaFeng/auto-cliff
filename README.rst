@@ -54,8 +54,6 @@ such as *./conf.yaml*
 
 An example please reference cliffg-example_
 
-References
---------------
 
 .. _cliff: https://docs.openstack.org/cliff/latest/
 .. _cliffg-example: https://github.com/SerenaFeng/cliffg-example
