@@ -11,10 +11,10 @@ The items and syntax in config file would be:
 .. code-block:: YAML
 
     # must be provided
-    project: grafana-client
+    project: cliffg-example
 
     # if not provided, empty
-    summary: a tool used to generate Grafana Dashboard
+    summary: A project to test cliff-generator
 
     # if not provided, empty
     author: SerenaFeng
@@ -23,18 +23,20 @@ The items and syntax in config file would be:
     author-email: serena.feng.711@gmail.com
 
     # if not provided, leverage https://github.com/{author}/{project}
-    home-page: https://github.com/SerenaFeng/Grafana-client
+    home-page: https://github.com/SerenaFeng/cliffg-example
 
     # if not provide, substitute - with _ in {project}
-    package: grafana_client
+    #package: cliffg_example
 
     # if not provide, leverage {project} directly
-    #cli: grafana-client
+    #cli: cliffg-example
 
     subs:
-      dashboard: [create, update, show, list, delete]
-      folder: [create, update, show, list, delete]
-      datasource: [create, update, show, list, delete]
+      sub1: [create, show, list, delete]
+      sub2: [create, update, show]
+
+    # support communicating with other components using RESTful API
+    use_rest: False
 
 Usage
 --------
