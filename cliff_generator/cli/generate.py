@@ -87,9 +87,17 @@ class Generation(cli.Command):
             sub_py = sub_py_t.render(package=package, sub=sub, actions=actions)
             self.write_file('{}.py'.format(sub), sub_py, cli_dir)
 
+        print 'begin to generate {}/.gitignore'.format(pdir)
+        gitignore_t = env.get_template('gitignore.j2')
+        gitignore = gitignore_t.render()
+        self.write_file('.gitignore', gitignore, pdir)
+
         return 'Congrats: Generate Success'
 
     def write_file(self, filename, content, dir):
         fdir = os.path.join(dir, filename)
-        with open(fdir, 'w') as fd:
-            fd.write(content)
+        try:
+            with open(fdir, 'w') as fd:
+                fd.write(content)
+        except Exception as err:
+            print 'write file {} failed with: {}'.format(filename, err)
