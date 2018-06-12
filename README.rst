@@ -52,7 +52,10 @@ Usage
 ``conf_file``: config file path, the config file must be a yaml file,
 such as *./conf.yaml*
 
+An example please reference cliffg-example_
+
 References
 --------------
 
-.. [cliff] https://docs.openstack.org/cliff/latest/
+.. _cliff: https://docs.openstack.org/cliff/latest/
+.. _cliffg-example: https://github.com/SerenaFeng/cliffg-example
