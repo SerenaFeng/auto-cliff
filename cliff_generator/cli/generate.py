@@ -72,14 +72,14 @@ class Generation(cli.Command):
         self.write_file('shell.py', shell_py, pkg_dir)
 
         print 'begin to generate {}/__init__.py'.format(pkg_dir)
-        init_py_empty_t = env.get_template('__init__.py.empty.j2')
-        init_py_empty = init_py_empty_t.render(author=conf.get('author'))
-        self.write_file('__init__.py', init_py_empty, pkg_dir)
+        init_py_t = env.get_template('__init__.py.j2')
+        init_py = init_py_t.render(author=conf.get('author'))
+        self.write_file('__init__.py', init_py, pkg_dir)
 
         print 'begin to generate {}/__init__.py'.format(cli_dir)
-        init_py_t = env.get_template('__init__.py.j2')
-        init_py = init_py_t.render()
-        self.write_file('__init__.py', init_py, cli_dir)
+        command_py_t = env.get_template('command.py.j2')
+        command_py = command_py_t.render()
+        self.write_file('__init__.py', command_py, cli_dir)
 
         for sub, actions in conf.get('subs').iteritems():
             print 'begin to generate {}/{}.py'.format(cli_dir, sub)
