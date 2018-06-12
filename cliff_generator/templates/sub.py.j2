@@ -14,7 +14,7 @@ class {{ sub|title }}List(cli.Lister):
         return self.format_output(columns, suites)
 
 {% elif action == 'show' -%}
-class {{ sub|title }}Show(cli.Shower):
+class {{ sub|title }}Show(cli.ShowOne):
     def get_parser(self, prog_name):
         parser = super({{ sub|title }}Show, self).get_parser(prog_name)
 #        parser.add_argument('name',
@@ -22,12 +22,10 @@ class {{ sub|title }}Show(cli.Shower):
         return parser
 
     def take_action(self, parsed_args):
-        suites = []
-        columns = []
-        return self.format_output(columns, suites)
+        return self.format_output({})
 
 {% elif action == 'create' -%}
-class {{ sub|title }}Create(cli.Shower):
+class {{ sub|title }}Create(cli.ShowOne):
     def get_parser(self, prog_name):
         parser = super({{ sub|title }}Create, self).get_parser(prog_name)
 #        parser.add_argument('body',
@@ -36,12 +34,10 @@ class {{ sub|title }}Create(cli.Shower):
         return parser
 
     def take_action(self, parsed_args):
-        suites = []
-        columns = []
-        return self.format_output(columns, suites)
+        return self.format_output({})
 
 {% elif action == 'update' -%}
-class {{ sub|title }}Update(cli.Shower):
+class {{ sub|title }}Update(cli.ShowOne):
     def get_parser(self, prog_name):
         parser = super({{ sub|title }}Update, self).get_parser(prog_name)
 #        parser.add_argument('name',
@@ -53,9 +49,7 @@ class {{ sub|title }}Update(cli.Shower):
         return parser
 
     def take_action(self, parsed_args):
-        suites = []
-        columns = []
-        return self.format_output(columns, suites)
+        return self.format_output({})
 
 {% elif action == 'delete' -%}
 class {{ sub|title }}Delete(cli.Command):

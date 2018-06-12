@@ -5,6 +5,7 @@ import logging
 
 from cliff import command
 from cliff import lister
+from cliff import show
 import six
 import os
 
@@ -42,19 +43,7 @@ class Lister(Command, lister.Lister):
                 (get_item_properties(s, columns) for s in data))
 
 
-class Shower(Command):
+class ShowOne(Command, show.ShowOne):
     @staticmethod
-    def format_output(columns, data):
-        return (columns,
-                (get_item_properties(s, columns) for s in data))
-
-    def read_file(self, name):
-        file = self.get_file(name)
-        if os.path.isfile(file):
-            with open(file, 'r') as fd:
-                try:
-                    print fd.read()
-                except Exception as exc:
-                    print exc
-        else:
-            self.log.error('{} not supported'.format(name))
+    def format_output(body):
+        return zip(*sorted(six.iteritems(body)))
