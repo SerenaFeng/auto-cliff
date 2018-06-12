@@ -4,10 +4,10 @@ from cliff import app
 from cliff import commandmanager
 
 
-class {{ cls }}Shell(app.App):
+class {{ conf['entry-cls'] }}Shell(app.App):
 
     def __init__(self):
-        super({{ cls }}Shell, self).__init__(
+        super({{ conf['entry-cls'] }}Shell, self).__init__(
             description='{{ conf.project }} cli',
             version='0.1',
             command_manager=commandmanager.CommandManager('{{ conf.package }}'),
@@ -27,7 +27,7 @@ class {{ cls }}Shell(app.App):
 
 
 def main(argv=sys.argv[1:]):
-    myshell = {{ cls }}Shell()
+    myshell = {{ conf['entry-cls'] }}Shell()
     return myshell.run(argv)
 
 
