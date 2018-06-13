@@ -1,3 +1,6 @@
+{% macro ENTRY(conf) -%}
+    {{ conf['entry-cls'] }}Shell
+{%- endmacro %}
 import sys
 
 from cliff import app
@@ -7,10 +10,10 @@ from cliff import commandmanager
 from {{ conf.package }}.utils import rest
 {% endif %}
 
-class {{ conf['entry-cls'] }}Shell(app.App):
+class {{ ENTRY(conf) }}(app.App):
 
     def __init__(self):
-        super({{ conf['entry-cls'] }}Shell, self).__init__(
+        super({{ ENTRY(conf) }}, self).__init__(
             description='{{ conf.project }} cli',
             version='0.1',
             command_manager=commandmanager.CommandManager('{{ conf.package }}'),
@@ -19,7 +22,7 @@ class {{ conf['entry-cls'] }}Shell(app.App):
 
     def build_option_parser(self, description, version, argparse_kwargs=None):
         self.LOG.debug('build_option_parser')
-        parser = super({{ conf['entry-cls'] }}Shell, self).build_option_parser(
+        parser = super({{ ENTRY(conf) }}, self).build_option_parser(
             description,
             version,
             argparse_kwargs)
@@ -47,7 +50,7 @@ class {{ conf['entry-cls'] }}Shell(app.App):
 
 
 def main(argv=sys.argv[1:]):
-    myshell = {{ conf['entry-cls'] }}Shell()
+    myshell = {{ ENTRY(conf) }}()
     return myshell.run(argv)
 
 
