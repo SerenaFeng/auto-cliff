@@ -5,7 +5,7 @@ import os
 import requests
 
 
-class ClientManager(object):
+class RestManager(object):
     headers = {}
 
     def __init__(self, cli_options=None):

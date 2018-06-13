@@ -26,4 +26,4 @@ subs:
   sub2: [create, update, show]
 
 # support communicating with other components using RESTful API
-use_rest: False
+use_rest: True
